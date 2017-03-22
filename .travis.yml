@@ -1,0 +1,24 @@
+language: objective-c
+osx_image: xcode8
+script: 
+        - echo Install Cocoapods
+        - gem install cocoapods -v  1.1.0
+        - pod repo update --silent
+
+
+        - echo Install Demo pod dependence
+        - pushd Demo
+        - pod install
+        - popd
+
+        - echo Build Demo project
+        - xcodebuild -quiet -workspace Demo/NIM.xcworkspace -scheme NIM -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+
+
+        - echo Install Example pod dependence
+        - pushd Example
+        - pod install
+        - popd
+
+        - echo Build Example project 
+        - xcodebuild -quiet -workspace Example/DemoApplication.xcworkspace -scheme DemoApplication -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
